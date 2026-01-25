@@ -1,0 +1,5 @@
+font-size=16
+theme=matrix
+background=000
+palette = 13=4e9a06
+quit-after-last-window-closed=true

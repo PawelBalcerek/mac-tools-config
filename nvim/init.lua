@@ -82,7 +82,7 @@ require("lazy").setup({
 	{
 		"stevearc/conform.nvim",
 		opts = {
-			formatters_by_ft = { python = { "isort", "black" }, lua = { "stylua" } },
+			formatters_by_ft = { python = { "ruff_organize_imports", "ruff_format" }, lua = { "stylua" } },
 			format_on_save = { timeout_ms = 500, lsp_fallback = true },
 		},
 	},
@@ -105,7 +105,7 @@ require("lazy").setup({
 			})
 		end,
 	},
-	-- COLORSCHEME
+	-- colorscheme
 	{
 		"sainnhe/everforest",
 		lazy = false,
@@ -138,43 +138,72 @@ require("lazy").setup({
 			vim.cmd([[colorscheme everforest]])
 		end,
 	},
+	-- BUFFERS
+	{
+		"kazhala/close-buffers.nvim",
+		config = function()
+			require("close_buffers").setup({
+				preserve_window_layout = { "all" },
+			})
+		end,
+	},
 
-	-- OTHERS
+	-- other
 	"vim-test/vim-test",
 	"tpope/vim-dispatch",
 	"rrethy/vim-illuminate",
 })
 
--- Enable Python LSP
+-- enable LSPs
 vim.lsp.enable("pyright")
 vim.lsp.enable("lua_ls")
 
--- Keymaps
-local opts = { silent = true }
-
--- Codeium
-vim.keymap.set("n", "<leader>ce", ":Codeium Enable<CR>", { desc = "Enable Codeium" })
-vim.keymap.set("n", "<leader>cd", ":Codeium Disable<CR>", { desc = "Disable Codeium" })
-
--- Vim-Test Mappings (From your original config)
-vim.keymap.set("n", "<leader>tn", "<cmd>TestNearest | wincmd p<CR>", opts)
-vim.keymap.set("n", "<leader>tf", "<cmd>TestFile | wincmd p<CR>", opts)
+-- vim-test config
 vim.g["test#strategy"] = "dispatch"
 
--- Formatting manual trigger
-vim.keymap.set("n", "<leader>f", function()
-	require("conform").format()
-end, { desc = "Format Buffer" })
+-- keymaps
+local opts = { silent = true }
 
--- LSP
-vim.keymap.set("n", "<leader>lh", vim.lsp.buf.hover, { desc = "LSP Hover" })
-local telescope_builtin = require("telescope.builtin")
-vim.keymap.set("n", "<leader>ld", telescope_builtin.lsp_definitions, { desc = "Look definition" })
-vim.keymap.set("n", "<leader>lr", telescope_builtin.lsp_references, { desc = "Look references" })
-
--- Dispatch
--- Execute python3 file with dispatch and focus on the new window
-vim.keymap.set("n", "<leader>dp", function()
+-- running
+vim.keymap.set("n", "<leader>rp", function()
 	vim.cmd("Dispatch python3 %")
 	vim.cmd("wincmd p")
-end, { desc = "Execute Python" })
+end, { desc = "Execute python3 file" })
+
+-- running tests
+vim.keymap.set("n", "<leader>tf", "<cmd>TestFile | wincmd p<CR>", opts, { desc = "Run file tests" })
+vim.keymap.set("n", "<leader>tn", "<cmd>TestNearest | wincmd p<CR>", opts, { desc = "Run nearest tests" })
+
+-- formatting
+vim.keymap.set("n", "<leader>f", function()
+	require("conform").format()
+end, { desc = "Format" })
+vim.keymap.set("n", "<leader>fa", function()
+	require("conform").format({ formatters = { "ruff_fix", "ruff_organize_imports", "ruff_format" } })
+end, { desc = "Format all" })
+
+-- lsp
+vim.keymap.set("n", "<C-i>", vim.lsp.buf.hover, { desc = "Information" })
+local telescope_builtin = require("telescope.builtin")
+vim.keymap.set("n", "<C-S-d>", telescope_builtin.lsp_definitions, { desc = "Look definition" })
+vim.keymap.set("n", "<C-S-r>", telescope_builtin.lsp_references, { desc = "Look references" })
+
+-- buffers
+-- use [b and ]b for previos and next buffer
+vim.keymap.set("n", "<leader>cb", ":BDelete other<CR>", { desc = "Close all other buffers" })
+
+-- codeium
+vim.keymap.set("n", "<leader>ce", ":Codeium Enable<CR>", { desc = "Enable codeium" })
+vim.keymap.set("n", "<leader>cd", ":Codeium Disable<CR>", { desc = "Disable codeium" })
+
+-- different
+vim.keymap.set("n", "<Esc>", function()
+	for _, win in ipairs(vim.api.nvim_list_wins()) do
+		local config = vim.api.nvim_win_get_config(win)
+		if config.relative ~= "" then
+			vim.api.nvim_win_close(win, false)
+		end
+	end
+	vim.cmd("noh")
+	return "<Esc>"
+end, { desc = "Close floating windows and clear highlights" })

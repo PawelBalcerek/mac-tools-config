@@ -3,3 +3,7 @@ theme=matrix
 background=000
 palette = 13=4e9a06
 quit-after-last-window-closed=true
+keybind = cmd+ctrl+shift+h=resize_split:left,50
+keybind = cmd+ctrl+shift+j=resize_split:down,50
+keybind = cmd+ctrl+shift+k=resize_split:up,50
+keybind = cmd+ctrl+shift+l=resize_split:right,50

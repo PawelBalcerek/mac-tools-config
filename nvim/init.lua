@@ -16,9 +16,9 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-	-- AI Engine
+	-- AI Agent
 	{
-		"Exafunction/codeium.vim",
+		"github/copilot.vim",
 		event = "BufEnter",
 	},
 	-- IntelliSense
@@ -192,10 +192,6 @@ vim.keymap.set("n", "<C-S-r>", telescope_builtin.lsp_references, { desc = "Look 
 -- use [b and ]b for previos and next buffer
 vim.keymap.set("n", "<leader>cb", ":BDelete other<CR>", { desc = "Close all other buffers" })
 
--- codeium
-vim.keymap.set("n", "<leader>ce", ":Codeium Enable<CR>", { desc = "Enable codeium" })
-vim.keymap.set("n", "<leader>cd", ":Codeium Disable<CR>", { desc = "Disable codeium" })
-
 -- different
 vim.keymap.set("n", "<Esc>", function()
 	for _, win in ipairs(vim.api.nvim_list_wins()) do
@@ -207,3 +203,7 @@ vim.keymap.set("n", "<Esc>", function()
 	vim.cmd("noh")
 	return "<Esc>"
 end, { desc = "Close floating windows and clear highlights" })
+
+-- copilot
+vim.keymap.set("n", "<leader>ce", ":let g:copilot_enabled = 1<CR>", { desc = "Enable Copilot" })
+vim.keymap.set("n", "<leader>cd", ":let g:copilot_enabled = 0<CR>", { desc = "Disable Copilot" })

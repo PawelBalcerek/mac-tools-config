@@ -82,7 +82,7 @@ require("lazy").setup({
 	{
 		"stevearc/conform.nvim",
 		opts = {
-			formatters_by_ft = { python = { "ruff_organize_imports", "ruff_format" }, lua = { "stylua" } },
+			formatters_by_ft = { go = { "goimports", "gofumpt" }, lua = { "stylua" } },
 			format_on_save = { timeout_ms = 500, lsp_fallback = true },
 		},
 	},
@@ -94,7 +94,7 @@ require("lazy").setup({
 			local config = require("nvim-treesitter.config")
 
 			config.setup({
-				ensure_installed = { "lua", "python" },
+				ensure_installed = { "go", "gomod", "gowork", "gosum", "lua", "vim", "vimdoc" },
 				sync_install = false,
 				auto_install = true,
 				highlight = {
@@ -155,7 +155,7 @@ require("lazy").setup({
 })
 
 -- enable LSPs
-vim.lsp.enable("pyright")
+vim.lsp.enable("gopls")
 vim.lsp.enable("lua_ls")
 
 -- vim-test config
@@ -179,7 +179,7 @@ vim.keymap.set("n", "<leader>f", function()
 	require("conform").format()
 end, { desc = "Format" })
 vim.keymap.set("n", "<leader>fa", function()
-	require("conform").format({ formatters = { "ruff_fix", "ruff_organize_imports", "ruff_format" } })
+	require("conform").format({ formatters = { "goimports", "gofumpt" } })
 end, { desc = "Format all" })
 
 -- lsp

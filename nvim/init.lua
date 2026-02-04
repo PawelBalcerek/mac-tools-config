@@ -82,7 +82,7 @@ require("lazy").setup({
 	{
 		"stevearc/conform.nvim",
 		opts = {
-			formatters_by_ft = { go = { "goimports", "gofumpt" }, lua = { "stylua" } },
+			formatters_by_ft = { go = { "goimports", "gofumpt" }, lua = { "stylua" }, toml = { "taplo" } },
 			format_on_save = { timeout_ms = 500, lsp_fallback = true },
 		},
 	},
@@ -94,7 +94,7 @@ require("lazy").setup({
 			local config = require("nvim-treesitter.config")
 
 			config.setup({
-				ensure_installed = { "go", "gomod", "gowork", "gosum", "lua", "vim", "vimdoc" },
+				ensure_installed = { "go", "gomod", "gowork", "gosum", "lua", "vim", "vimdoc", "toml" },
 				sync_install = false,
 				auto_install = true,
 				highlight = {
@@ -157,6 +157,7 @@ require("lazy").setup({
 -- enable LSPs
 vim.lsp.enable("gopls")
 vim.lsp.enable("lua_ls")
+vim.lsp.enable("taplo")
 
 -- vim-test config
 vim.g["test#strategy"] = "dispatch"
@@ -165,10 +166,7 @@ vim.g["test#strategy"] = "dispatch"
 local opts = { silent = true }
 
 -- running
-vim.keymap.set("n", "<leader>rp", function()
-	vim.cmd("Dispatch python3 %")
-	vim.cmd("wincmd p")
-end, { desc = "Execute python3 file" })
+vim.keymap.set("n", "<leader>r", function() end, { desc = "Execute" })
 
 -- running tests
 vim.keymap.set("n", "<leader>tf", "<cmd>TestFile | wincmd p<CR>", opts, { desc = "Run file tests" })

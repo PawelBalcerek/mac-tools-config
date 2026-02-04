@@ -16,6 +16,11 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
+	-- AI Agent
+	{
+		"Exafunction/codeium.vim",
+		event = "BufEnter",
+	},
 	-- IntelliSense
 	{
 		"hrsh7th/nvim-cmp",

@@ -190,6 +190,10 @@ vim.keymap.set("n", "<C-S-r>", telescope_builtin.lsp_references, { desc = "Look 
 -- use [b and ]b for previos and next buffer
 vim.keymap.set("n", "<leader>cb", ":BDelete other<CR>", { desc = "Close all other buffers" })
 
+---- copilot
+vim.keymap.set("n", "<leader>ce", ":let g:copilot_enabled = 1<CR>", { desc = "Enable Copilot" })
+vim.keymap.set("n", "<leader>cd", ":let g:copilot_enabled = 0<CR>", { desc = "Disable Copilot" })
+
 -- different
 vim.keymap.set("n", "<Esc>", function()
 	for _, win in ipairs(vim.api.nvim_list_wins()) do
@@ -202,6 +206,18 @@ vim.keymap.set("n", "<Esc>", function()
 	return "<Esc>"
 end, { desc = "Close floating windows and clear highlights" })
 
--- copilot
-vim.keymap.set("n", "<leader>ce", ":let g:copilot_enabled = 1<CR>", { desc = "Enable Copilot" })
-vim.keymap.set("n", "<leader>cd", ":let g:copilot_enabled = 0<CR>", { desc = "Disable Copilot" })
+vim.keymap.set("n", "<leader>pm", function()
+	if vim.opt.cmdheight:get() == 0 then
+		-- Restore standard view (Switch back)
+		vim.opt.cmdheight = 1
+		vim.opt.laststatus = 2 -- Use 3 for global statusline
+		vim.opt.showmode = true
+		vim.opt.ruler = true
+	else
+		-- Enable Zen Mode (Hide everything)
+		vim.opt.cmdheight = 0
+		vim.opt.laststatus = 0
+		vim.opt.showmode = false
+		vim.opt.ruler = false
+	end
+end, { desc = "Toggle Zen Mode" })

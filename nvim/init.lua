@@ -199,3 +199,18 @@ vim.keymap.set("n", "<Esc>", function()
 	vim.cmd("noh")
 	return "<Esc>"
 end, { desc = "Close floating windows and clear highlights" })
+vim.keymap.set("n", "<leader>pm", function()
+	if vim.opt.cmdheight:get() == 0 then
+		-- Restore standard view (Switch back)
+		vim.opt.cmdheight = 1
+		vim.opt.laststatus = 2 -- Use 3 for global statusline
+		vim.opt.showmode = true
+		vim.opt.ruler = true
+	else
+		-- Enable Zen Mode (Hide everything)
+		vim.opt.cmdheight = 0
+		vim.opt.laststatus = 0
+		vim.opt.showmode = false
+		vim.opt.ruler = false
+	end
+end, { desc = "Toggle Zen Mode" })

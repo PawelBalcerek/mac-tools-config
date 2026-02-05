@@ -209,6 +209,7 @@ local telescope_builtin = require("telescope.builtin")
 vim.keymap.set("n", "<C-S-d>", telescope_builtin.lsp_definitions, { desc = "Look definition" })
 vim.keymap.set("n", "<C-S-r>", telescope_builtin.lsp_references, { desc = "Look references" })
 vim.keymap.set("n", "<A-CR>", vim.lsp.buf.code_action, { desc = "Code actions" })
+vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { desc = "Rename" })
 
 -- buffers
 -- use [b and ]b for previos and next buffer

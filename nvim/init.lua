@@ -188,6 +188,10 @@ vim.g["test#strategy"] = "dispatch"
 -- keymaps
 local opts = { silent = true }
 
+-- codeium
+vim.keymap.set("n", "<leader>ce", ":Codeium Enable<CR>", { desc = "Enable codeium" })
+vim.keymap.set("n", "<leader>cd", ":Codeium Disable<CR>", { desc = "Disable codeium" })
+
 -- running
 vim.keymap.set("n", "<leader>r", function()
 	vim.cmd("Dispatch python3 %")

@@ -163,6 +163,25 @@ vim.lsp.enable("lua_ls")
 vim.lsp.enable("taplo")
 vim.lsp.enable("pyright")
 
+-- diagnostics
+vim.diagnostic.config({
+	virtual_text = {
+		prefix = "●",
+	},
+	signs = true,
+	update_in_insert = false,
+	underline = true,
+	severity_sort = true,
+	float = {
+		focusable = true,
+		style = "minimal",
+		border = "rounded",
+		source = "always",
+		header = "",
+		prefix = "",
+	},
+})
+
 -- vim-test config
 vim.g["test#strategy"] = "dispatch"
 
@@ -192,14 +211,16 @@ vim.keymap.set("n", "<C-i>", vim.lsp.buf.hover, { desc = "Information" })
 local telescope_builtin = require("telescope.builtin")
 vim.keymap.set("n", "<C-S-d>", telescope_builtin.lsp_definitions, { desc = "Look definition" })
 vim.keymap.set("n", "<C-S-r>", telescope_builtin.lsp_references, { desc = "Look references" })
+vim.keymap.set("n", "<A-CR>", vim.lsp.buf.code_action, { desc = "Code actions" })
+vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { desc = "Rename" })
 
 -- buffers
 -- use [b and ]b for previos and next buffer
 vim.keymap.set("n", "<leader>cb", ":BDelete other<CR>", { desc = "Close all other buffers" })
 
--- codeium
-vim.keymap.set("n", "<leader>ce", ":Codeium Enable<CR>", { desc = "Enable codeium" })
-vim.keymap.set("n", "<leader>cd", ":Codeium Disable<CR>", { desc = "Disable codeium" })
+-- diagnostics
+vim.keymap.set("n", "[e", vim.diagnostic.goto_prev)
+vim.keymap.set("n", "]e", vim.diagnostic.goto_next)
 
 -- different
 vim.keymap.set("n", "<Esc>", function()
@@ -212,3 +233,18 @@ vim.keymap.set("n", "<Esc>", function()
 	vim.cmd("noh")
 	return "<Esc>"
 end, { desc = "Close floating windows and clear highlights" })
+vim.keymap.set("n", "<leader>pm", function()
+	if vim.opt.cmdheight:get() == 0 then
+		-- Restore standard view (Switch back)
+		vim.opt.cmdheight = 1
+		vim.opt.laststatus = 2 -- Use 3 for global statusline
+		vim.opt.showmode = true
+		vim.opt.ruler = true
+	else
+		-- Enable Zen Mode (Hide everything)
+		vim.opt.cmdheight = 0
+		vim.opt.laststatus = 0
+		vim.opt.showmode = false
+		vim.opt.ruler = false
+	end
+end, { desc = "Toggle Zen Mode" })

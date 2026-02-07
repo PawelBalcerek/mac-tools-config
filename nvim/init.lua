@@ -21,29 +21,6 @@ require("lazy").setup({
 		"Exafunction/codeium.vim",
 		event = "BufEnter",
 	},
-	-- IntelliSense
-	{
-		"hrsh7th/nvim-cmp",
-		dependencies = {
-			"hrsh7th/cmp-nvim-lsp",
-			"hrsh7th/cmp-buffer",
-			"onsails/lspkind.nvim",
-		},
-		config = function()
-			local cmp = require("cmp")
-			cmp.setup({
-				formatting = { format = require("lspkind").cmp_format({ mode = "symbol_text" }) },
-				mapping = cmp.mapping.preset.insert({
-					["<CR>"] = cmp.mapping.confirm({ select = true }),
-					["<Tab>"] = cmp.mapping.select_next_item(),
-				}),
-				sources = cmp.config.sources({
-					{ name = "nvim_lsp" },
-					{ name = "buffer" },
-				}),
-			})
-		end,
-	},
 	--  UI: Lualine & Icons
 	{
 		"nvim-lualine/lualine.nvim",
@@ -68,11 +45,96 @@ require("lazy").setup({
 			},
 		},
 	},
-	-- LSP & TOOLS: Mason & Lspconfig & Telescope
+	-- LSP
 	{ "williamboman/mason.nvim", opts = {} },
 	{
 		"neovim/nvim-lspconfig",
-		dependencies = { "williamboman/mason-lspconfig.nvim" },
+		dependencies = {
+			"williamboman/mason.nvim",
+			"williamboman/mason-lspconfig.nvim",
+			"hrsh7th/cmp-nvim-lsp",
+			"hrsh7th/cmp-buffer",
+			"hrsh7th/cmp-path",
+			"hrsh7th/cmp-cmdline",
+			"hrsh7th/nvim-cmp",
+			"onsails/lspkind.nvim",
+			"L3MON4D3/LuaSnip",
+			"saadparwaiz1/cmp_luasnip",
+			"j-hui/fidget.nvim",
+		},
+		config = function()
+			local cmp_lsp = require("cmp_nvim_lsp")
+			local capabilities = vim.tbl_deep_extend(
+				"force",
+				{},
+				vim.lsp.protocol.make_client_capabilities(),
+				cmp_lsp.default_capabilities()
+			)
+			local lspconfig = require("lspconfig")
+			require("fidget").setup({})
+			require("mason").setup()
+			require("mason-lspconfig").setup({
+				ensure_installed = { "lua_ls", "taplo" },
+				handlers = {
+					function(server_name)
+						lspconfig[server_name].setup({
+							capabilities = capabilities,
+						})
+					end,
+					["lua_ls"] = function()
+						lspconfig.lua_ls.setup({
+							capabilities = capabilities,
+							settings = {
+								Lua = {
+									diagnostics = {
+										globals = { "vim" },
+									},
+								},
+							},
+						})
+					end,
+				},
+			})
+
+			local cmp = require("cmp")
+			local luasnip = require("luasnip")
+
+			cmp.setup({
+				snippet = {
+					expand = function(args)
+						luasnip.lsp_expand(args.body)
+					end,
+				},
+				formatting = { format = require("lspkind").cmp_format({ mode = "symbol_text" }) },
+				mapping = cmp.mapping.preset.insert({
+					["<CR>"] = cmp.mapping.confirm({ select = true }),
+					["<C-Space>"] = cmp.mapping.complete(),
+				}),
+				sources = cmp.config.sources({
+					{ name = "nvim_lsp" },
+					{ name = "luasnip" },
+					{ name = "buffer" },
+				}),
+			})
+
+			vim.diagnostic.config({
+				virtual_text = {
+					prefix = "●",
+				},
+				signs = true,
+				update_in_insert = false,
+				underline = true,
+				severity_sort = true,
+				float = {
+					focusable = true,
+					style = "minimal",
+					border = "rounded",
+					source = "always",
+					header = "",
+					prefix = "",
+				},
+			})
+		end,
 	},
 	{
 		"nvim-telescope/telescope.nvim",
@@ -154,30 +216,6 @@ require("lazy").setup({
 	"rrethy/vim-illuminate",
 })
 
--- enable LSPs
-vim.lsp.enable("gopls")
-vim.lsp.enable("lua_ls")
-vim.lsp.enable("taplo")
-
--- diagnostics
-vim.diagnostic.config({
-	virtual_text = {
-		prefix = "●",
-	},
-	signs = true,
-	update_in_insert = false,
-	underline = true,
-	severity_sort = true,
-	float = {
-		focusable = true,
-		style = "minimal",
-		border = "rounded",
-		source = "always",
-		header = "",
-		prefix = "",
-	},
-})
-
 -- vim-test config
 vim.g["test#strategy"] = "dispatch"
 
@@ -189,6 +227,7 @@ vim.keymap.set("n", "<leader>ce", ":Codeium Enable<CR>", { desc = "Enable codeiu
 vim.keymap.set("n", "<leader>cd", ":Codeium Disable<CR>", { desc = "Disable codeium" })
 
 -- running
+vim.keymap.set("n", "<leader>r", function() end, { desc = "Run" })
 
 -- running tests
 vim.keymap.set("n", "<leader>tf", "<cmd>TestFile | wincmd p<CR>", opts, { desc = "Run file tests" })

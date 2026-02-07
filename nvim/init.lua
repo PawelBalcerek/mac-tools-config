@@ -235,7 +235,7 @@ vim.keymap.set("n", "<leader>tn", "<cmd>TestNearest | wincmd p<CR>", opts, { des
 
 -- formatting
 vim.keymap.set("n", "<leader>f", function()
-	require("conform").format()
+	require("conform").format({ formatters = { "gofumpt" } })
 end, { desc = "Format" })
 vim.keymap.set("n", "<leader>fa", function()
 	require("conform").format({ formatters = { "goimports", "gofumpt" } })

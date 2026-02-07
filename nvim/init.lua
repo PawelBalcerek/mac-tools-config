@@ -82,11 +82,7 @@ require("lazy").setup({
 	{
 		"stevearc/conform.nvim",
 		opts = {
-			formatters_by_ft = {
-				lua = { "stylua" },
-				toml = { "taplo" },
-				python = { "ruff_organize_imports", "ruff_format" },
-			},
+			formatters_by_ft = { go = { "goimports", "gofumpt" }, lua = { "stylua" }, toml = { "taplo" } },
 			format_on_save = { timeout_ms = 500, lsp_fallback = true },
 		},
 	},
@@ -98,7 +94,7 @@ require("lazy").setup({
 			local config = require("nvim-treesitter.config")
 
 			config.setup({
-				ensure_installed = { "lua", "vim", "vim-doc", "toml", "python" },
+				ensure_installed = { "go", "gomod", "gowork", "gosum", "lua", "vim", "vimdoc", "toml" },
 				sync_install = false,
 				auto_install = true,
 				highlight = {
@@ -159,9 +155,9 @@ require("lazy").setup({
 })
 
 -- enable LSPs
+vim.lsp.enable("gopls")
 vim.lsp.enable("lua_ls")
 vim.lsp.enable("taplo")
-vim.lsp.enable("pyright")
 
 -- diagnostics
 vim.diagnostic.config({
@@ -193,10 +189,6 @@ vim.keymap.set("n", "<leader>ce", ":Codeium Enable<CR>", { desc = "Enable codeiu
 vim.keymap.set("n", "<leader>cd", ":Codeium Disable<CR>", { desc = "Disable codeium" })
 
 -- running
-vim.keymap.set("n", "<leader>r", function()
-	vim.cmd("Dispatch python3 %")
-	vim.cmd("wincmd p")
-end, { desc = "Run" })
 
 -- running tests
 vim.keymap.set("n", "<leader>tf", "<cmd>TestFile | wincmd p<CR>", opts, { desc = "Run file tests" })
@@ -207,7 +199,7 @@ vim.keymap.set("n", "<leader>f", function()
 	require("conform").format()
 end, { desc = "Format" })
 vim.keymap.set("n", "<leader>fa", function()
-	require("conform").format({ formatters = { "ruff_fix", "ruff_organize_imports", "ruff_format" } })
+	require("conform").format({ formatters = { "goimports", "gofumpt" } })
 end, { desc = "Format all" })
 
 -- lsp

@@ -16,11 +16,37 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
+<<<<<<< HEAD
 	-- AI Agent
 	{
 		"Exafunction/codeium.vim",
 		event = "BufEnter",
 	},
+	-- IntelliSense
+	{
+		"hrsh7th/nvim-cmp",
+		dependencies = {
+			"hrsh7th/cmp-nvim-lsp",
+			"hrsh7th/cmp-buffer",
+			"onsails/lspkind.nvim",
+		},
+		config = function()
+			local cmp = require("cmp")
+			cmp.setup({
+				formatting = { format = require("lspkind").cmp_format({ mode = "symbol_text" }) },
+				mapping = cmp.mapping.preset.insert({
+					["<CR>"] = cmp.mapping.confirm({ select = true }),
+					["<Tab>"] = cmp.mapping.select_next_item(),
+				}),
+				sources = cmp.config.sources({
+					{ name = "nvim_lsp" },
+					{ name = "buffer" },
+				}),
+			})
+		end,
+	},
+=======
+>>>>>>> d6baf7db9af09ad6f0274b8c888b42f1a9af0a98
 	--  UI: Lualine & Icons
 	{
 		"nvim-lualine/lualine.nvim",
@@ -74,7 +100,7 @@ require("lazy").setup({
 			require("fidget").setup({})
 			require("mason").setup()
 			require("mason-lspconfig").setup({
-				ensure_installed = { "lua_ls", "taplo", "gopls" },
+				ensure_installed = { "lua_ls", "taplo" },
 				handlers = {
 					function(server_name)
 						lspconfig[server_name].setup({
@@ -144,7 +170,14 @@ require("lazy").setup({
 	{
 		"stevearc/conform.nvim",
 		opts = {
+<<<<<<< HEAD
 			formatters_by_ft = { go = { "goimports", "gofumpt" }, lua = { "stylua" }, toml = { "taplo" } },
+=======
+			formatters_by_ft = {
+				lua = { "stylua" },
+				toml = { "taplo" },
+			},
+>>>>>>> d6baf7db9af09ad6f0274b8c888b42f1a9af0a98
 			format_on_save = { timeout_ms = 500, lsp_fallback = true },
 		},
 	},
@@ -216,6 +249,33 @@ require("lazy").setup({
 	"rrethy/vim-illuminate",
 })
 
+<<<<<<< HEAD
+-- enable LSPs
+vim.lsp.enable("gopls")
+vim.lsp.enable("lua_ls")
+vim.lsp.enable("taplo")
+
+-- diagnostics
+vim.diagnostic.config({
+	virtual_text = {
+		prefix = "●",
+	},
+	signs = true,
+	update_in_insert = false,
+	underline = true,
+	severity_sort = true,
+	float = {
+		focusable = true,
+		style = "minimal",
+		border = "rounded",
+		source = "always",
+		header = "",
+		prefix = "",
+	},
+})
+
+=======
+>>>>>>> d6baf7db9af09ad6f0274b8c888b42f1a9af0a98
 -- vim-test config
 vim.g["test#strategy"] = "dispatch"
 
@@ -227,7 +287,10 @@ vim.keymap.set("n", "<leader>ce", ":Codeium Enable<CR>", { desc = "Enable codeiu
 vim.keymap.set("n", "<leader>cd", ":Codeium Disable<CR>", { desc = "Disable codeium" })
 
 -- running
+<<<<<<< HEAD
+=======
 vim.keymap.set("n", "<leader>r", function() end, { desc = "Run" })
+>>>>>>> d6baf7db9af09ad6f0274b8c888b42f1a9af0a98
 
 -- running tests
 vim.keymap.set("n", "<leader>tf", "<cmd>TestFile | wincmd p<CR>", opts, { desc = "Run file tests" })
@@ -238,7 +301,11 @@ vim.keymap.set("n", "<leader>f", function()
 	require("conform").format()
 end, { desc = "Format" })
 vim.keymap.set("n", "<leader>fa", function()
+<<<<<<< HEAD
 	require("conform").format({ formatters = { "goimports", "gofumpt" } })
+=======
+	require("conform").format({ formatters = {} })
+>>>>>>> d6baf7db9af09ad6f0274b8c888b42f1a9af0a98
 end, { desc = "Format all" })
 
 -- lsp

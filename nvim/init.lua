@@ -251,7 +251,8 @@ vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { desc = "Rename" })
 
 -- buffers
 -- use [b and ]b for previos and next buffer
-vim.keymap.set("n", "<leader>cb", ":BDelete other<CR>", { desc = "Close all other buffers" })
+vim.keymap.set("n", "<leader>cob", ":BDelete other<CR>", { desc = "Close all other buffers" })
+vim.keymap.set("n", "<leader>ccb", ":BDelete<CR>", { desc = "Close current buffer" })
 
 -- diagnostics
 vim.keymap.set("n", "[e", vim.diagnostic.goto_prev)

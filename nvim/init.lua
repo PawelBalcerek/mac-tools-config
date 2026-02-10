@@ -18,7 +18,7 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
 	-- AI Agent
 	{
-		"Exafunction/codeium.vim",
+		"github/copilot.vim",
 		event = "BufEnter",
 	},
 	--  UI: Lualine & Icons
@@ -222,9 +222,9 @@ vim.g["test#strategy"] = "dispatch"
 -- keymaps
 local opts = { silent = true }
 
--- codeium
-vim.keymap.set("n", "<leader>ce", ":Codeium Enable<CR>", { desc = "Enable codeium" })
-vim.keymap.set("n", "<leader>cd", ":Codeium Disable<CR>", { desc = "Disable codeium" })
+-- copilot
+vim.keymap.set("n", "<leader>ce", ":let g:copilot_enabled = 1<CR>", { desc = "Enable Copilot" })
+vim.keymap.set("n", "<leader>cd", ":let g:copilot_enabled = 0<CR>", { desc = "Disable Copilot" })
 
 -- running
 vim.keymap.set("n", "<leader>r", function() end, { desc = "Run" })

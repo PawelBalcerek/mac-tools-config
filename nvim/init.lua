@@ -258,6 +258,14 @@ vim.keymap.set("n", "<leader>ccb", ":bd<CR>", { desc = "Close current buffer" })
 vim.keymap.set("n", "[e", vim.diagnostic.goto_prev)
 vim.keymap.set("n", "]e", vim.diagnostic.goto_next)
 
+-- viewport
+vim.keymap.set("n", "<C-j>", "<C-d>", { desc = "Move the cursor down half a screen" })
+vim.keymap.set("n", "<C-k>", "<C-u>", { desc = "Move the cursor up half a screen" })
+vim.keymap.set("n", "<D-j>", "<C-e>", { desc = "Move the viewport down one line" })
+vim.keymap.set("n", "<D-k>", "<C-y>", { desc = "Move the viewport up one line" })
+vim.keymap.set("n", "zj", "zb", { desc = "Move the current line to the bottom of the screen" })
+vim.keymap.set("n", "zk", "zt", { desc = "Move the current line to the top of the screen" })
+
 -- different
 vim.keymap.set("n", "<Esc>", function()
 	for _, win in ipairs(vim.api.nvim_list_wins()) do

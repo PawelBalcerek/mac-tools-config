@@ -153,9 +153,7 @@ require("lazy").setup({
 		"nvim-treesitter/nvim-treesitter",
 		build = ":TSUpdate",
 		config = function()
-			local config = require("nvim-treesitter.config")
-
-			config.setup({
+			require("nvim-treesitter.config").setup({
 				ensure_installed = { "go", "gomod", "gowork", "gosum", "lua", "vim", "vimdoc", "toml" },
 				sync_install = false,
 				auto_install = true,
@@ -165,6 +163,17 @@ require("lazy").setup({
 				},
 				indent = { enable = true },
 			})
+		end,
+	},
+	-- refactoring
+	{
+		"ThePrimeagen/refactoring.nvim",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"nvim-treesitter/nvim-treesitter",
+		},
+		config = function()
+			require("refactoring").setup()
 		end,
 	},
 	-- colorscheme
@@ -247,7 +256,18 @@ local telescope_builtin = require("telescope.builtin")
 vim.keymap.set("n", "<C-S-d>", telescope_builtin.lsp_definitions, { desc = "Look definition" })
 vim.keymap.set("n", "<C-S-r>", telescope_builtin.lsp_references, { desc = "Look references" })
 vim.keymap.set("n", "<A-CR>", vim.lsp.buf.code_action, { desc = "Code actions" })
+
+-- refactoring
 vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { desc = "Rename" })
+vim.keymap.set({ "n", "x" }, "<leader>ref", function()
+	return require("refactoring").refactor("Extract Function")
+end, { expr = true })
+vim.keymap.set({ "n", "x" }, "<leader>rev", function()
+	return require("refactoring").refactor("Extract Variable")
+end, { expr = true })
+vim.keymap.set({ "n", "x" }, "<leader>riv", function()
+	return require("refactoring").refactor("Inline Variable")
+end, { expr = true })
 
 -- buffers
 -- use [b and ]b for previos and next buffer
@@ -265,6 +285,10 @@ vim.keymap.set("n", "<D-j>", "<C-e>", { desc = "Move the viewport down one line"
 vim.keymap.set("n", "<D-k>", "<C-y>", { desc = "Move the viewport up one line" })
 vim.keymap.set("n", "zj", "zb", { desc = "Move the current line to the bottom of the screen" })
 vim.keymap.set("n", "zk", "zt", { desc = "Move the current line to the top of the screen" })
+
+-- comment
+vim.keymap.set("v", "cs", "gc", { remap = true, desc = "Comment selected lines" })
+vim.keymap.set("n", "cc", "gcc", { remap = true, desc = "Comment current line" })
 
 -- different
 vim.keymap.set("n", "<Esc>", function()

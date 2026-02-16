@@ -255,6 +255,19 @@ vim.keymap.set("n", "<C-i>", vim.lsp.buf.hover, { desc = "Information" })
 local telescope_builtin = require("telescope.builtin")
 vim.keymap.set("n", "<C-S-d>", telescope_builtin.lsp_definitions, { desc = "Look definition" })
 vim.keymap.set("n", "<C-S-r>", telescope_builtin.lsp_references, { desc = "Look references" })
+vim.keymap.set("n", "<D-S-f>", telescope_builtin.live_grep, { desc = "Find in files" })
+
+--[[
+--
+-- How to use find and replace? 
+--
+-- 1. <D-S-f>
+-- 2. Type the search term.
+-- 3. Press <C-q> to send the search results to the quickfix list.
+-- 4. Run :cdo s/old/new/gc | update to perform the replacement across all files in the quickfix list, with confirmation for each replacement.
+--
+--]]
+
 vim.keymap.set("n", "<A-CR>", vim.lsp.buf.code_action, { desc = "Code actions" })
 
 -- refactoring

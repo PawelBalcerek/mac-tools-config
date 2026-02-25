@@ -244,10 +244,12 @@ vim.keymap.set("n", "<leader>tn", "<cmd>TestNearest | wincmd p<CR>", opts, { des
 
 -- formatting
 vim.keymap.set("n", "<leader>f", function()
-	require("conform").format({ formatters = { "gofumpt" } })
+	require("conform").format({ formatters_by_ft = { go = { "gofumpt" }, lua = { "stylua" }, toml = { "taplo" } } })
 end, { desc = "Format" })
 vim.keymap.set("n", "<leader>fa", function()
-	require("conform").format({ formatters = { "goimports", "gofumpt" } })
+	require("conform").format({
+		formatters_by_ft = { go = { "goimports", "gofumpt" }, lua = { "stylua" }, toml = { "taplo" } },
+	})
 end, { desc = "Format all" })
 
 -- lsp

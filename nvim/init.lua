@@ -302,8 +302,8 @@ vim.keymap.set("n", "zj", "zb", { desc = "Move the current line to the bottom of
 vim.keymap.set("n", "zk", "zt", { desc = "Move the current line to the top of the screen" })
 
 -- comment
-vim.keymap.set("v", "cs", "gc", { remap = true, desc = "Comment selected lines" })
-vim.keymap.set("n", "cc", "gcc", { remap = true, desc = "Comment current line" })
+vim.keymap.set("v", "<D-/>", "gc", { remap = true, desc = "Comment selected lines" })
+vim.keymap.set("n", "<D-/>", "gcc", { remap = true, desc = "Comment current line" })
 
 -- different
 vim.keymap.set("n", "<Esc>", function()

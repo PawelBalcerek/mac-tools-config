@@ -22,6 +22,7 @@ The Neovim configuration is modularized for better maintainability:
     - `treesitter.lua`: Syntax highlighting.
     - `telescope.nvim`: Fuzzy finding and LSP navigation.
     - `test.lua`: Testing via `vim-test`.
+    - `pomodoro.lua`: Pomodoro timer.
     - `everforest.lua`: Theme configuration.
 
 ### Ghostty (`ghostty/config`)

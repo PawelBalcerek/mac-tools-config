@@ -16,11 +16,6 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-	-- AI Agent
-	{
-		"github/copilot.vim",
-		event = "BufEnter",
-	},
 	--  UI: Lualine & Icons
 	{
 		"nvim-lualine/lualine.nvim",
@@ -74,7 +69,7 @@ require("lazy").setup({
 			require("fidget").setup({})
 			require("mason").setup()
 			require("mason-lspconfig").setup({
-				ensure_installed = { "lua_ls", "taplo", "gopls" },
+				ensure_installed = { "lua_ls", "taplo" },
 				handlers = {
 					function(server_name)
 						lspconfig[server_name].setup({
@@ -144,7 +139,7 @@ require("lazy").setup({
 	{
 		"stevearc/conform.nvim",
 		opts = {
-			formatters_by_ft = { go = { "goimports", "gofumpt" }, lua = { "stylua" }, toml = { "taplo" } },
+			formatters_by_ft = { lua = { "stylua" }, toml = { "taplo" } },
 			format_on_save = { timeout_ms = 500, lsp_fallback = true },
 		},
 	},
@@ -154,7 +149,7 @@ require("lazy").setup({
 		build = ":TSUpdate",
 		config = function()
 			require("nvim-treesitter.config").setup({
-				ensure_installed = { "go", "gomod", "gowork", "gosum", "lua", "vim", "vimdoc", "toml" },
+				ensure_installed = { "lua", "vim", "vimdoc", "toml" },
 				sync_install = false,
 				auto_install = true,
 				highlight = {
@@ -231,10 +226,6 @@ vim.g["test#strategy"] = "dispatch"
 -- keymaps
 local opts = { silent = true }
 
--- copilot
-vim.keymap.set("n", "<leader>ce", ":let g:copilot_enabled = 1<CR>", { desc = "Enable Copilot" })
-vim.keymap.set("n", "<leader>cd", ":let g:copilot_enabled = 0<CR>", { desc = "Disable Copilot" })
-
 -- running
 vim.keymap.set("n", "<leader>r", function() end, { desc = "Run" })
 
@@ -244,11 +235,11 @@ vim.keymap.set("n", "<leader>tn", "<cmd>TestNearest | wincmd p<CR>", opts, { des
 
 -- formatting
 vim.keymap.set("n", "<leader>f", function()
-	require("conform").format({ formatters_by_ft = { go = { "gofumpt" }, lua = { "stylua" }, toml = { "taplo" } } })
+	require("conform").format({ formatters_by_ft = { lua = { "stylua" }, toml = { "taplo" } } })
 end, { desc = "Format" })
 vim.keymap.set("n", "<leader>fa", function()
 	require("conform").format({
-		formatters_by_ft = { go = { "goimports", "gofumpt" }, lua = { "stylua" }, toml = { "taplo" } },
+		formatters_by_ft = { lua = { "stylua" }, toml = { "taplo" } },
 	})
 end, { desc = "Format all" })
 

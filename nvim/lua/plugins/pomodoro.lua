@@ -2,7 +2,7 @@ return {
 	"epwalsh/pomo.nvim",
 	version = "*",
 	lazy = true,
-	cmd = { "TimerStop", "TimerSession", "TimerPause", "TimerResume", "TimerHide", "TimerShow" },
+	cmd = { "TimerStart", "TimerStop", "TimerSession", "TimerPause", "TimerResume", "TimerHide", "TimerShow" },
 	dependencies = {
 		"rcarriga/nvim-notify",
 	},
@@ -16,6 +16,10 @@ return {
 		{ "<leader>pts", "<cmd>TimerShow<CR>", desc = "Pomodoro timer show" },
 	},
 	opts = {
+		notifiers = {
+			{ name = "Default" },
+			{ name = "System" },
+		},
 		sessions = {
 			single_pomodoro_session = {
 				{ name = "Work", duration = "25m" },

@@ -3,3 +3,5 @@ containers
 github-copilot
 jgit
 yarn
+
+**/*.orig

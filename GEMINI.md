@@ -14,10 +14,10 @@ This is a personal configuration repository (part of a dotfiles setup) for:
 ### Neovim Configuration (`nvim/`)
 The Neovim configuration is modularized for better maintainability:
 - **`init.lua`**: Entry point that bootstraps `lazy.nvim` and loads configuration modules.
-- **`lua/config/options.lua`**: Standard Vim options (`vim.opt`) and global variables (`vim.g`).
+- **`lua/config/options.lua`**: Standard Vim options (`vim.opt`) including 120-character line limit.
 - **`lua/config/keymaps.lua`**: General, non-plugin keybindings (navigation, viewport, Zen Mode).
 - **`lua/plugins/`**: Individual plugin specifications. Each file returns a table for `lazy.nvim`, including plugin-specific keymaps using the `keys` property.
-    - `lsp.lua`: LSP, Mason, CMP, and diagnostics.
+    - `lsp.lua`: LSP (Lua, TOML, Markdown), Mason, CMP, and diagnostics.
     - `conform.lua`: Formatting via `stylua` and `taplo`.
     - `treesitter.lua`: Syntax highlighting.
     - `telescope.nvim`: Fuzzy finding and LSP navigation.

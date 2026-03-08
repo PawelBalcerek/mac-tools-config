@@ -34,7 +34,7 @@ return {
 			require("fidget").setup({})
 			require("mason").setup()
 			require("mason-lspconfig").setup({
-				ensure_installed = { "lua_ls", "taplo" },
+				ensure_installed = { "lua_ls", "taplo", "marksman" },
 				handlers = {
 					function(server_name)
 						lspconfig[server_name].setup({

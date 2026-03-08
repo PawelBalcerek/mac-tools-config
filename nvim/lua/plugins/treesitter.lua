@@ -3,7 +3,7 @@ return {
 	build = ":TSUpdate",
 	config = function()
 		require("nvim-treesitter.config").setup({
-			ensure_installed = { "lua", "vim", "vimdoc", "toml" },
+			ensure_installed = { "lua", "vim", "vimdoc", "toml", "markdown", "markdown_inline" },
 			sync_install = false,
 			auto_install = true,
 			highlight = {

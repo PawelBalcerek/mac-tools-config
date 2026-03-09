@@ -4,6 +4,7 @@ return {
 		formatters_by_ft = {
 			lua = { "stylua" },
 			toml = { "taplo" },
+			go = { "goimports", "gofumpt" },
 		},
 		format_on_save = { timeout_ms = 500, lsp_fallback = true },
 	},
@@ -11,7 +12,11 @@ return {
 		{
 			"<leader>f",
 			function()
-				require("conform").format({ lsp_fallback = true })
+				if vim.bo.filetype == "go" then
+					require("conform").format({ formatters = { "gofumpt" } })
+				else
+					require("conform").format({ lsp_fallback = true })
+				end
 			end,
 			desc = "Format",
 		},

@@ -4,6 +4,12 @@ return {
 		formatters_by_ft = {
 			lua = { "stylua" },
 			toml = { "taplo" },
+			markdown = { "prettier" },
+		},
+		formatters = {
+			prettier = {
+				prepend_args = { "--prose-wrap", "always", "--print-width", "120" },
+			},
 		},
 		format_on_save = { timeout_ms = 500, lsp_fallback = true },
 	},

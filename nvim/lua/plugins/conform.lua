@@ -4,12 +4,15 @@ return {
 		formatters_by_ft = {
 			lua = { "stylua" },
 			toml = { "taplo" },
-			go = { "goimports", "gofumpt" },
+			go = { "goimports", "gofumpt", "golines" },
 			markdown = { "prettier" },
 		},
 		formatters = {
 			prettier = {
 				prepend_args = { "--prose-wrap", "always", "--print-width", "120" },
+			},
+			golines = {
+				prepend_args = { "--max-len=120", "--base-formatter=gofumpt" },
 			},
 		},
 		format_on_save = { timeout_ms = 500, lsp_fallback = true },
@@ -19,7 +22,7 @@ return {
 			"<leader>f",
 			function()
 				if vim.bo.filetype == "go" then
-					require("conform").format({ formatters = { "gofumpt" } })
+					require("conform").format({ formatters = { "gofumpt", "golines" } })
 				else
 					require("conform").format({ lsp_fallback = true })
 				end

@@ -14,6 +14,7 @@ return {
 				"gomod",
 				"gowork",
 				"gosum",
+				"python",
 			},
 			sync_install = false,
 			auto_install = true,

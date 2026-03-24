@@ -5,6 +5,7 @@ return {
 			lua = { "stylua" },
 			toml = { "taplo" },
 			go = { "goimports", "gofumpt", "golines" },
+			python = { "ruff_organize_imports", "ruff_format" },
 			markdown = { "prettier" },
 		},
 		formatters = {
@@ -21,8 +22,11 @@ return {
 		{
 			"<leader>f",
 			function()
-				if vim.bo.filetype == "go" then
+				local ft = vim.bo.filetype
+				if ft == "go" then
 					require("conform").format({ formatters = { "gofumpt", "golines" } })
+				elseif ft == "python" then
+					require("conform").format({ formatters = { "ruff_format" } })
 				else
 					require("conform").format({ lsp_fallback = true })
 				end

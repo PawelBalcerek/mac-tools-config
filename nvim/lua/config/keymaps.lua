@@ -1,6 +1,12 @@
 -- General Keymaps (not tied to specific plugins)
 -- running
-vim.keymap.set("n", "<leader>r", function() end, { desc = "Run" })
+vim.keymap.set("n", "<leader>r", function()
+	local ft = vim.bo.filetype
+	if ft == "python" then
+		vim.cmd("Dispatch python3 %")
+		vim.cmd("wincmd p")
+	end
+end, { desc = "Run" })
 
 -- viewport
 vim.keymap.set("n", "<C-j>", "<C-d>", { desc = "Move the cursor down half a screen" })

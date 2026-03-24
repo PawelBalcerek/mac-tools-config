@@ -35,7 +35,7 @@ return {
 			require("fidget").setup({})
 			require("mason").setup()
 			require("mason-lspconfig").setup({
-				ensure_installed = { "lua_ls", "taplo", "marksman", "gopls" },
+				ensure_installed = { "lua_ls", "taplo", "marksman", "gopls", "pyright", "ruff" },
 				handlers = {
 					function(server_name)
 						lspconfig[server_name].setup({
@@ -52,6 +52,29 @@ return {
 									},
 								},
 							},
+						})
+					end,
+					["pyright"] = function()
+						lspconfig.pyright.setup({
+							capabilities = capabilities,
+							settings = {
+								python = {
+									analysis = {
+										autoSearchPaths = true,
+										useLibraryCodeForTypes = true,
+										autoImportCompletions = true,
+										indexing = true,
+									},
+								},
+							},
+						})
+					end,
+					["ruff"] = function()
+						lspconfig.ruff.setup({
+							capabilities = capabilities,
+							on_attach = function(client, _)
+								client.server_capabilities.hoverProvider = false
+							end,
 						})
 					end,
 				},

@@ -34,13 +34,13 @@ vim.keymap.set("n", "<leader>pm", function()
 		vim.opt.laststatus = 2
 		vim.opt.showmode = true
 		vim.opt.ruler = true
-		pcall(vim.cmd, "TimerShow")
+		vim.opt.colorcolumn = "120"
 	else
 		-- Enable Zen Mode
 		vim.opt.cmdheight = 0
 		vim.opt.laststatus = 0
 		vim.opt.showmode = false
 		vim.opt.ruler = false
-		pcall(vim.cmd, "TimerHide")
+		vim.opt.colorcolumn = ""
 	end
 end, { desc = "Toggle Zen Mode" })

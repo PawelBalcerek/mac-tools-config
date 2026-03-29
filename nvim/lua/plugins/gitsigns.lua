@@ -12,7 +12,7 @@ return {
 			end
 
 			-- Navigation
-			map("n", "]h", function()
+			map("n", "]c", function()
 				if vim.wo.diff then
 					vim.cmd.normal({ "]c", bang = true })
 				else
@@ -20,13 +20,15 @@ return {
 				end
 			end, { desc = "Next Git hunk" })
 
-			map("n", "[h", function()
+			map("n", "[c", function()
 				if vim.wo.diff then
 					vim.cmd.normal({ "[c", bang = true })
 				else
 					gitsigns.nav_hunk("prev")
 				end
 			end, { desc = "Previous Git hunk" })
+
+			map("n", "<leader>hi", gitsigns.preview_hunk_inline)
 		end,
 	},
 }

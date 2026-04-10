@@ -7,6 +7,8 @@ return {
 			go = { "goimports", "gofumpt", "golines" },
 			python = { "ruff_organize_imports", "ruff_format" },
 			markdown = { "prettier" },
+			sh = { "shfmt" },
+			yaml = { "prettier" },
 		},
 		formatters = {
 			prettier = {

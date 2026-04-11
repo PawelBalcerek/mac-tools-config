@@ -1,6 +1,30 @@
 return {
 	"nvim-telescope/telescope.nvim",
-	dependencies = { "nvim-lua/plenary.nvim" },
+	dependencies = {
+		"nvim-lua/plenary.nvim",
+		{
+			"nvim-pack/nvim-spectre",
+			opts = {
+				open_cmd = function()
+					local width = math.floor(vim.o.columns * 0.6)
+					local height = math.floor(vim.o.lines * 0.6)
+					local col = math.floor((vim.o.columns - width) / 2)
+					local row = math.floor((vim.o.lines - height) / 2)
+
+					local buf = vim.api.nvim_create_buf(false, true)
+					vim.api.nvim_open_win(buf, true, {
+						relative = "editor",
+						width = width,
+						height = height,
+						col = col,
+						row = row,
+						style = "minimal",
+						border = "rounded",
+					})
+				end,
+			},
+		},
+	},
 	keys = {
 		{
 			"<C-S-d>",
@@ -23,16 +47,20 @@ return {
 			end,
 			desc = "Find in files",
 		},
+		{
+			"<D-S-r>",
+			function()
+				require("spectre").toggle()
+			end,
+			desc = "Find and replace",
+		},
+		{
+			"<D-S-r>",
+			function()
+				require("spectre").open_visual()
+			end,
+			mode = "v",
+			desc = "Find and replace",
+		},
 	},
 }
-
---[[
---
--- How to use find and replace? 
---
--- 1. <D-S-f>
--- 2. Type the search term.
--- 3. Press <C-q> to send the search results to the quickfix list.
--- 4. Run :cdo s/old/new/gc | update to perform the replacement across all files in the quickfix list, with confirmation for each replacement.
---
---]]

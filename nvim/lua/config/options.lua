@@ -1,6 +1,6 @@
 vim.opt.number = true
 vim.opt.compatible = false
-vim.opt.autoread = false
+vim.opt.autoread = true
 vim.g["test#strategy"] = "dispatch"
 
 -- Tab/indentation configuration

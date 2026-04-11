@@ -20,9 +20,15 @@ return {
 						row = row,
 						style = "minimal",
 						border = "rounded",
+						zindex = 40,
 					})
 				end,
 			},
+		},
+	},
+	opts = {
+		defaults = {
+			initial_mode = "normal",
 		},
 	},
 	keys = {

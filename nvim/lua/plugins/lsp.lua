@@ -35,7 +35,18 @@ return {
 			require("fidget").setup({})
 			require("mason").setup()
 			require("mason-lspconfig").setup({
-				ensure_installed = { "lua_ls", "taplo", "marksman", "gopls", "pyright", "ruff" },
+				ensure_installed = {
+					"lua_ls",
+					"taplo",
+					"marksman",
+					"gopls",
+					"pyright",
+					"ruff",
+					"dockerls",
+					"docker_compose_language_service",
+					"yamlls",
+					"bashls",
+				},
 				handlers = {
 					function(server_name)
 						lspconfig[server_name].setup({

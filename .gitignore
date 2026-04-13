@@ -3,5 +3,6 @@ containers
 github-copilot
 jgit
 yarn
+cagent
 
 **/*.orig

@@ -1,3 +1,35 @@
+local last_search = ""
+
+local function live_grep_with_memory(opts)
+	opts = opts or {}
+	local default_text = opts.default_text or last_search
+
+	require("telescope.builtin").live_grep({
+		default_text = default_text,
+		attach_mappings = function(prompt_bufnr, map)
+			local action_state = require("telescope.actions.state")
+			local actions = require("telescope.actions")
+
+			map({ "i", "n" }, "<CR>", function()
+				last_search = action_state.get_current_line()
+				actions.select_default(prompt_bufnr)
+			end)
+
+			vim.api.nvim_buf_attach(prompt_bufnr, false, {
+				on_lines = function()
+					vim.schedule(function()
+						if vim.api.nvim_buf_is_valid(prompt_bufnr) then
+							last_search = action_state.get_current_line()
+						end
+					end)
+				end,
+			})
+
+			return true
+		end,
+	})
+end
+
 return {
 	"nvim-telescope/telescope.nvim",
 	dependencies = {
@@ -49,8 +81,21 @@ return {
 		{
 			"<D-S-f>",
 			function()
-				require("telescope.builtin").live_grep()
+				live_grep_with_memory()
 			end,
+			desc = "Find in files",
+		},
+		{
+			"<D-S-f>",
+			function()
+				local old_reg = vim.fn.getreg("v")
+				vim.cmd('normal! "vy')
+				local selection = vim.fn.getreg("v")
+				vim.fn.setreg("v", old_reg)
+				last_search = selection
+				live_grep_with_memory({ default_text = selection })
+			end,
+			mode = "v",
 			desc = "Find in files",
 		},
 		{

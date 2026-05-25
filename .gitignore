@@ -4,5 +4,6 @@ github-copilot
 jgit
 yarn
 cagent
+.antigravitycli
 
 **/*.orig

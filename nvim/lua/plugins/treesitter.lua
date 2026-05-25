@@ -18,6 +18,7 @@ return {
 				"dockerfile",
 				"yaml",
 				"bash",
+				"sql",
 			},
 			sync_install = false,
 			auto_install = true,

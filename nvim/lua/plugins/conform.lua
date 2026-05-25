@@ -9,6 +9,7 @@ return {
 			markdown = { "prettier" },
 			sh = { "shfmt" },
 			yaml = { "prettier" },
+			sql = { "sqlfluff" },
 		},
 		formatters = {
 			prettier = {

@@ -5,5 +5,8 @@ jgit
 yarn
 cagent
 .antigravitycli
+envman
+gh
+gcloud
 
 **/*.orig

@@ -20,6 +20,10 @@ vim.keymap.set("n", "zk", "zt", { desc = "Move the current line to the top of th
 vim.keymap.set("v", "<D-/>", "gc", { remap = true, desc = "Comment selected lines" })
 vim.keymap.set("n", "<D-/>", "gcc", { remap = true, desc = "Comment current line" })
 
+-- lines join / break
+-- J - joins lines
+vim.keymap.set('n', 'K', 'i<CR><Esc>k$', { desc = 'Break line and keep cursor on upper line' })
+
 -- floating window management & highlights
 vim.keymap.set("n", "<Esc>", function()
 	for _, win in ipairs(vim.api.nvim_list_wins()) do
